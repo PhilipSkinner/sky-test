@@ -51,7 +51,7 @@ app.get('/api/v1/customer/location', function(req, res) {
         if (value) {
             var data = value[0];
             
-            if (data && data.length == 0) {
+            if (!data || data.length == 0) {
                 //no such user, sorry :(
                 this.res.jsonp({
                     meta    : {
@@ -70,7 +70,7 @@ app.get('/api/v1/customer/location', function(req, res) {
                 if (value) {
                     var data = value[0];
                     
-                    if (data && data.length ==0) {
+                    if (!data || data.length ==0) {
                         //no location, shouldn't be possible with DB schema
                         this.res.jsonp({
                             meta    : {
@@ -83,9 +83,7 @@ app.get('/api/v1/customer/location', function(req, res) {
                     
                     //we have a location, lets return it
                     this.res.jsonp({
-                        data    : {
-                            locationID  : data[0].location_id,
-                        } 
+                        data    : data[0],
                     });
                     return;
                 } else {
@@ -115,7 +113,8 @@ app.get('/api/v1/customer/location', function(req, res) {
             });
             return;
         }
-    }.bind({ res : res, req : req }), function(error) {
+    }.bind({ res : res, req : req }), 
+    function(error) {
         this.res.jsonp({
             meta    : {
                 code    : 500,
@@ -127,7 +126,99 @@ app.get('/api/v1/customer/location', function(req, res) {
 });
 
 app.get('/api/v1/catalogue', function(req, res) {
-    res.send("1");
+    var locationID = null;
+    
+    locationID = req.query.locationID ? req.query.locationID : locationID;
+    locationID = req.query.locationId ? req.query.locationId : locationID;
+    locationID = req.query.locationid ? req.query.locationid : locationID;
+    
+    if (locationID == null) {
+        res.jsonp({
+            meta    : {
+                code    : 500,
+                message : 'Missing locationID argument',  
+            },
+        });
+        return;
+    }
+    
+    //is the location valid?
+    q.when(mysql.db.fetchLocationByID(locationID))
+    .then(function(value) {
+        if (value) {
+            var data = value[0];
+            
+            if (!data || data.length == 0) {
+                this.res.jsonp({
+                    meta    : {
+                        code    : 404,
+                        message : "No such location found",  
+                    },
+                });
+                return;
+            }                           
+            
+            //its all good, so we can continue to fetch the catalogue
+            q.when(mysql.db.fetchCatalogue(data[0].uid))
+            .then(function(value) {
+                if (value) {
+                    var ret = {};
+                    for (var i = 0; i < value[0].length; i++) {
+                        var item = value[0][i];
+                        if (!ret[item['name']]) {
+                            ret[item['name']] = [];
+                        }
+                        
+                        ret[item['name']].push(item);
+                    }
+                    
+                    //we'll return an empty array of values this time, let the UI handle no results etc
+                    this.res.jsonp({
+                        data    : ret,
+                    });
+                    return;
+                } else {
+                    this.res.jsonp({
+                        meta : {
+                            code    : 500,
+                            message : 'Database did not respond with an expected result', 
+                        } ,
+                    });
+                    return;
+                }
+                this.res.jsonp({});
+            }.bind(this),
+            function(error) {
+                this.res.jsonp({
+                    meta    : {
+                        code    : 500,
+                        message : 'Unknown database error occured.',  
+                    },
+                });
+                return;
+            }.bind(this));
+            return;
+        } else {
+            this.res.jsonp({
+               meta : {
+                    code    : 500,
+                    message : 'Database did not respond with an expected result', 
+               } ,
+            });
+            return;
+        }
+    }.bind({ res : res, req : req }),
+    function(error) {
+        this.res.jsonp({
+            meta    : {
+                code    : 500,
+                message : 'Unknown database error occured.',  
+            },
+        });
+        return;
+    }.bind({ res : res, req : req }));
+        
+    return;
 });
 
 var server = app.listen(port, function() {
