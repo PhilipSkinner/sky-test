@@ -19,7 +19,8 @@ var db = {
     },
         
     initMethods : function() {
-        this.fetchCustomer = q.nbind(this.connection.query, this.connection, "SELECT * FROM customer WHERE uid=?");        
+        this.fetchCustomer = q.nbind(this.connection.query, this.connection, "SELECT * FROM customer WHERE uid=?");
+        this.fetchLocation = q.nbind(this.connection.query, this.connection, "SELECT * FROM location WHERE uid=?");        
     },    
 }
 
