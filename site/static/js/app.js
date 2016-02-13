@@ -1,5 +1,6 @@
 var catalogueApp = angular.module('catalogueApp', [
     'ngRoute',
+    'ngCookies',
     'catalogueAppControllers',    
 ]);
 

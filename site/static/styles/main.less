@@ -41,7 +41,94 @@ html, body {
             margin-right: 3%;
             border: 1px solid rgba(0,0,0,0.6);
             border-radius: 3px;
-            padding: 20px;
+            padding: 0px;
+            min-height: 250px;
+            position: relative;
+            
+            .columnHeader {
+                border-bottom: 1px solid rgba(0,0,0,0.6);
+                padding: 10px 20px;
+                font-weight: bold;
+            }
+            
+            .loader {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                bottom: 0px;
+                right: 0px;
+                display: none;
+                
+                img {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin: -8px 0px 0px -8px; 
+                }
+            }
+            
+            .noResults {
+                position: absolute;
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+                display: none;
+                
+                table {
+                    height: 100%;
+                    width: 100%;    
+                    
+                    td {
+                        text-align: center;
+                        padding: 0px 20px;
+                        font-style: italic;
+                    }                
+                }
+            }
+            
+            .results {
+                ul {
+                    list-style: none;
+                    margin: 0px;
+                    padding: 0px;
+                    
+                    li {
+                        padding: 10px 20px;
+                        cursor: pointer;
+                        border-bottom: 1px solid rgba(0,0,0,0.3);
+                        
+                        &:hover {
+                            background: #CCC;
+                        }
+                        
+                        .checkbox {
+                            position: relative;
+                            top: 2px;
+                        }
+                    }
+                }
+            }
+            
+            &.loading {
+                .loader {
+                    display: block;
+                }
+                
+                .results {
+                    display: none;
+                }
+            }
+            
+            &.empty {
+                .noResults {
+                    display: block;
+                }
+                
+                .results {
+                    display: none;
+                }
+            }
         }
     }
 }

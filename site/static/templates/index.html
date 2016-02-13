@@ -1,15 +1,68 @@
 <div class="indexWrapper">
     <h2>Select your products</h2>
     
+    <p>Current location is {{ location.name }}</p>
+    
     <div class="indexColumns">
-        <div class="column">
-            
+        <div class="column {{ status.news_status }}">
+            <div class="columnHeader">
+                News
+            </div>
+            <div class="loader">
+                <img src="/static/images/loader.gif">
+            </div>
+            <div class="noResults">
+                <!-- what is he doing? a table? oh noes! -->
+                <table>
+                    <tr>
+                        <td>
+                            There are no News products available in your area.
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="results">
+                <ul>
+                    <li ng-repeat="item in news" ng-click="item.is_selected = !item.is_selected">
+                        <span class="checkbox">
+                            <input type="checkbox" ng-checked="item.is_selected">                            
+                        </span>                                            
+                        <span class="name">{{ item.product_name }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="column {{ status.sports_status }}">
+            <div class="columnHeader">
+                Sports
+            </div>
+            <div class="loader">
+                <img src="/static/images/loader.gif">
+            </div>
+            <div class="noResults">
+                <table>
+                    <tr>
+                        <td>                       
+                            There are no Sports products available in your area.
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="results">
+                <ul>
+                    <li ng-repeat="item in sports">
+                        <span class="checkbox">
+                            <input type="checkbox" ngChecked="{{ item.is_selected }}">                            
+                        </span>
+                        <span class="name">{{ item.product_name }}</span>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="column">
-            
-        </div>
-        <div class="column">
-            
+            <div class="columnHeader">
+                Your Selection
+            </div>
         </div>
         <div style="clear: both;"></div>
     </div>
