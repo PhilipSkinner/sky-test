@@ -1,9 +1,27 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="catalogueApp">
     <head>
+        <script src="/static/js/lib/angular.min.js"></script>
+        <script src="/static/js/lib/angular-route.min.js"></script>
         
+        <!-- our app -->
+        <script src="/static/js/app.js"></script>
+        
+        <!-- controllers -->
+        <script src="/static/js/controllers/index.js"></script>
+        <script src="/static/js/controllers/confirm.js"></script>
     </head>
     <body>
-        Hello
+        <div id="header">
+            
+        </div>
+        
+        <div id="body">
+            <div ng-view></div>
+        </div>
+        
+        <div id="footer">
+            
+        </div>
     </body>
 </html>
