@@ -10,11 +10,10 @@ var port        = 8080;
 var debug       = true;
 var app         = express();
 
-app.get('/', function(req, res) {
-     res.send("1");
-});
+//enable static serving
+app.use(express.static('site'));
 
-app.get('/confirm', function(req, res) {
+app.get('/api/v1/confirm', function(req, res) {
     res.send("1");
 });
 

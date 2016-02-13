@@ -3,3 +3,6 @@
 
 #the node modules
 node_modules
+
+#css
+site/static/css/*

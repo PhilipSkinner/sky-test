@@ -1,4 +1,4 @@
-describe("Index page test", function() {        
+describe("API::V1 Confirm endpoint test", function() {
     describe("GET /", function() {
         it ("returns 200", function() {
             
@@ -21,5 +21,5 @@ describe("Index page test", function() {
          it ("returns 404", function() {
              
          });
-    });        
+    });  
 });
