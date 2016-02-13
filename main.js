@@ -6,6 +6,7 @@
 var express     = require('express');
 var q           = require('q');
 var mysql       = require('./node/db');
+var exports     = module.exports = {};
 
 //might want to set this via config or args later
 var port        = 8080;
@@ -130,5 +131,9 @@ app.get('/api/v1/catalogue', function(req, res) {
 });
 
 var server = app.listen(port, function() {
-    console.log("Server is running on port:", port); 
+    //console.log("Server is running on port:", port); 
 });
+
+exports.shutdown = function() {
+    server.close();
+};
