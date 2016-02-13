@@ -16,6 +16,84 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `catalogue`
+--
+
+DROP TABLE IF EXISTS `catalogue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `catalogue` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `category` int(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`uid`),
+  KEY `category` (`category`),
+  CONSTRAINT `catalogue_ibfk_1` FOREIGN KEY (`category`) REFERENCES `category` (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `catalogue`
+--
+
+LOCK TABLES `catalogue` WRITE;
+/*!40000 ALTER TABLE `catalogue` DISABLE KEYS */;
+INSERT INTO `catalogue` VALUES (1,1,'Arsenal TV'),(2,1,'Chelsea TV'),(3,1,'Liverpool TV'),(4,2,'Sky News'),(5,2,'Sky Sports News');
+/*!40000 ALTER TABLE `catalogue` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `catalogue_location`
+--
+
+DROP TABLE IF EXISTS `catalogue_location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `catalogue_location` (
+  `catalogue` int(11) NOT NULL,
+  `location` int(11) NOT NULL,
+  KEY `catalogue` (`catalogue`),
+  KEY `location` (`location`),
+  CONSTRAINT `catalogue_location_ibfk_1` FOREIGN KEY (`catalogue`) REFERENCES `catalogue` (`uid`),
+  CONSTRAINT `catalogue_location_ibfk_2` FOREIGN KEY (`location`) REFERENCES `location` (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `catalogue_location`
+--
+
+LOCK TABLES `catalogue_location` WRITE;
+/*!40000 ALTER TABLE `catalogue_location` DISABLE KEYS */;
+INSERT INTO `catalogue_location` VALUES (1,2),(2,2),(3,3);
+/*!40000 ALTER TABLE `catalogue_location` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `category`
+--
+
+DROP TABLE IF EXISTS `category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `category` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `category`
+--
+
+LOCK TABLES `category` WRITE;
+/*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (1,'Sports'),(2,'News');
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `customer`
 --
 
@@ -75,4 +153,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-13 11:11:32
+-- Dump completed on 2016-02-13 11:49:33

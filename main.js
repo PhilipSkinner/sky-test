@@ -25,7 +25,7 @@ mysql.db.initialize({
 app.use(express.static('site'));
 
 app.get('/api/v1/confirm', function(req, res) {
-    res.send("1");
+    
 });
 
 app.get('/api/v1/customer/location', function(req, res) {
