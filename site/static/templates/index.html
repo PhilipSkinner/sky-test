@@ -3,67 +3,93 @@
     
     <p>Current location is {{ location.name }}</p>
     
-    <div class="indexColumns">
-        <div class="column {{ status.news_status }}">
-            <div class="columnHeader">
-                News
+    <form name="productform" method="POST" novalidate action="/confirm" ng-submit="productform.$valid && submit()">        
+        <!-- our form elements we will post to the confirm page -->
+        <input ng-repeat="items in selected" type="hidden" name="product" value="{{ items.product_name }}">
+        <input type="hidden" name="customerID" value="{{ customerID }}">
+        <!-- end of elements -->
+    
+        <div class="indexColumns">
+            <div class="column {{ status.news_status }}">
+                <div class="columnHeader">
+                    News
+                </div>
+                <div class="loader">
+                    <img src="/static/images/loader.gif">
+                </div>
+                <div class="noResults">
+                    <!-- what is he doing? a table? oh noes! -->
+                    <table>
+                        <tr>
+                            <td>
+                                There are no News products available in your area.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="results">
+                    <ul>
+                        <li ng-repeat="item in news" ng-click="item.is_selected = !item.is_selected">
+                            <span class="checkbox">
+                                <input type="checkbox" ng-checked="item.is_selected">                            
+                            </span>                                            
+                            <span class="name">{{ item.product_name }}</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="loader">
-                <img src="/static/images/loader.gif">
+            <div class="column {{ status.sports_status }}">
+                <div class="columnHeader">
+                    Sports
+                </div>
+                <div class="loader">
+                    <img src="/static/images/loader.gif">
+                </div>
+                <div class="noResults">
+                    <table>
+                        <tr>
+                            <td>                       
+                                There are no Sports products available in your area.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="results">
+                    <ul>
+                        <li ng-repeat="item in sports" ng-click="item.is_selected = !item.is_selected">
+                            <span class="checkbox">
+                                <input type="checkbox" ng-checked="item.is_selected">                            
+                            </span>
+                            <span class="name">{{ item.product_name }}</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="noResults">
-                <!-- what is he doing? a table? oh noes! -->
-                <table>
-                    <tr>
-                        <td>
-                            There are no News products available in your area.
-                        </td>
-                    </tr>
-                </table>
+            <div class="column {{ status.basket_status }}">
+                <div class="columnHeader">
+                    Your Selection
+                </div>
+                <div class="noResults">
+                    <table>
+                        <tr>
+                            <td>                       
+                                You have not selected any products yet.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="results">
+                    <ul>
+                        <li ng-repeat="item in selected">
+                            <span class="name">{{ item.product_name }}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="button">
+                    <input type="submit" value="Checkout">
+                </div>
             </div>
-            <div class="results">
-                <ul>
-                    <li ng-repeat="item in news" ng-click="item.is_selected = !item.is_selected">
-                        <span class="checkbox">
-                            <input type="checkbox" ng-checked="item.is_selected">                            
-                        </span>                                            
-                        <span class="name">{{ item.product_name }}</span>
-                    </li>
-                </ul>
-            </div>
+            <div style="clear: both;"></div>
         </div>
-        <div class="column {{ status.sports_status }}">
-            <div class="columnHeader">
-                Sports
-            </div>
-            <div class="loader">
-                <img src="/static/images/loader.gif">
-            </div>
-            <div class="noResults">
-                <table>
-                    <tr>
-                        <td>                       
-                            There are no Sports products available in your area.
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="results">
-                <ul>
-                    <li ng-repeat="item in sports">
-                        <span class="checkbox">
-                            <input type="checkbox" ngChecked="{{ item.is_selected }}">                            
-                        </span>
-                        <span class="name">{{ item.product_name }}</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="column">
-            <div class="columnHeader">
-                Your Selection
-            </div>
-        </div>
-        <div style="clear: both;"></div>
-    </div>
+    </form>
 </div>

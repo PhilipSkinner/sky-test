@@ -7,6 +7,7 @@ var express     = require('express');
 var q           = require('q');
 var mysql       = require('./node/db');
 var exports     = module.exports = {};
+var bodyParser  = require('body-parser');
 
 //might want to set this via config or args later
 var port        = 8080;
@@ -24,8 +25,16 @@ mysql.db.initialize({
 //enable static serving
 app.use(express.static('site'));
 
-app.get('/api/v1/confirm', function(req, res) {
+//body parsing
+app.use(bodyParser.urlencoded({
+    extended : true,
+}));
+
+app.post('/confirm', function(req, res) {
+    var args = req.body;        
     
+    res.json(args);
+    return; 
 });
 
 app.get('/api/v1/customer/location', function(req, res) {

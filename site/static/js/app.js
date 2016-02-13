@@ -8,10 +8,7 @@ catalogueApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.when('/', {
             templateUrl : '/static/templates/index.html',
-            controller  : 'indexController',
-        }).when('/confirm', {
-            templateUrl : '/static/templates/confirm.html',
-            controller  : 'confirmController',
+            controller  : 'indexController',        
         }).otherwise({
            redirectTo   : '/', 
         });

@@ -7,9 +7,12 @@ catalogueAppControllers.controller('indexController', ['$scope', '$http', '$cook
         $scope.status = {
             news_status     : 'loading',
             sports_status   : 'loading',  
+            basket_status   : 'empty',
         };               
         $scope.news = [];
-        $scope.sports = [];                
+        $scope.sports = [];          
+        $scope.selected = [];      
+        $scope.submitted = false;
                 
         //get the data from the API
         $http.get('/api/v1/customer/location?customerID=' + $scope.customerID)
@@ -54,7 +57,7 @@ catalogueAppControllers.controller('indexController', ['$scope', '$http', '$cook
                                 $scope.$watch(function(scope) {                                    
                                     return scope.news[this].is_selected;
                                 }.bind(i), function() { //I perfer bind to closure, its more readable I find
-                                    console.log("it changed"); 
+                                    $scope.constructSelected(); 
                                 });                                
                             }
                             
@@ -62,7 +65,7 @@ catalogueAppControllers.controller('indexController', ['$scope', '$http', '$cook
                                 $scope.$watch(function(scope) {
                                     return scope.sports[this].is_selected;    
                                 }.bind(i), function() {
-                                    console.log("it changed here too");
+                                    $scope.constructSelected();
                                 });
                             }                                                                  
                         }
@@ -73,5 +76,37 @@ catalogueAppControllers.controller('indexController', ['$scope', '$http', '$cook
                 alert("there was an error fetching your location data");
             }
         });
+        
+        //submit handler
+        $scope.submit = function() {            
+            if ($scope.selected.length == 0) {
+                alert("You must select something before you can checkout");
+                return false;
+            }            
+            return true;  
+        };
+        
+        //lets make something to construct our selected items array
+        $scope.constructSelected = function() {
+            this.selected = [];
+            
+            for (var i = 0; i < this.news.length; i++) {
+                if (this.news[i].is_selected) {
+                    this.selected.push(this.news[i]);
+                }
+            }
+            
+            for (var i = 0; i < this.sports.length; i++) {
+                if (this.sports[i].is_selected) {
+                    this.selected.push(this.sports[i]);
+                }
+            }
+            
+            if (this.selected.length > 0) {
+                this.status.basket_status = 'canCheckout';
+            } else {
+                this.status.basket_status = 'empty';
+            }
+        }.bind($scope);
     }
 ]);
