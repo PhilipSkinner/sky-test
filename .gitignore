@@ -5,4 +5,4 @@
 node_modules
 
 #css
-site/static/css/*
+site/static/css/*.css
