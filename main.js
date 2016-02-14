@@ -70,7 +70,7 @@ app.get('/api/v1/customer/location', function(req, res) {
 });
 
 //for confirming the user data, see use above
-function confirmUser(value) {
+function confirmUser(value) {    
     if (value) {
         var data = value[0];
         
@@ -250,3 +250,6 @@ var server = app.listen(port, function() {
 exports.shutdown = function() {
     server.close();
 };
+
+//exports for testing
+exports.confirmUser = confirmUser;
