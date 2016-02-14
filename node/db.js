@@ -5,14 +5,14 @@ var q = require('q');
 var db = {
     connection  : null,
     
-    initialize: function(params) {
+    initialize: function(params) {               
         this.connection = mysql.createConnection({
             host        : params.hostname,
             database    : params.database,
             user        : params.username,
             password    : params.password,
         });
-        this.connection.connect();
+        this.connection.connect();            
         
         //init our methods now
         this.initMethods();        
