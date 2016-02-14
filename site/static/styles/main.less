@@ -38,12 +38,16 @@ html, body {
             float: left;
             width: 30%;
             box-sizing: border-box;
-            margin-right: 3%;
+            margin-right: 5%;
             border: 1px solid rgba(0,0,0,0.6);
             border-radius: 3px;
             padding: 0px;
             min-height: 250px;
             position: relative;
+            
+            &:nth-of-type(3n) {
+                margin-right: 0px;
+            }
             
             .columnHeader {
                 border-bottom: 1px solid rgba(0,0,0,0.6);
@@ -146,6 +150,20 @@ html, body {
                 .results {
                     display: none;
                 }
+            }
+        }
+    }
+}
+
+//responsive styles
+@media screen and (max-width: 640px) {
+    .indexWrapper {
+        .indexColumns {
+            .column {
+                float: none;
+                width: 100%;
+                margin-right: 0px;
+                margin-bottom: 15px;
             }
         }
     }
