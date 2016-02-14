@@ -18,10 +18,10 @@ This should install the node.js dependencies, setup the local database for you t
 
 You may want to setup the mysql database automatically, the current default settings are:
 
-hostname : localhost
-database : sky
-username : sky
-password : sky
+* hostname : localhost
+* database : sky
+* username : sky
+* password : sky
 
 ; you can insert the sky.sql file to create all of the test data etc:
 
