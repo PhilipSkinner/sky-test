@@ -1,3 +1,5 @@
+window.catalogueAppControllers = window.catalogueAppControllers || {};
+
 catalogueAppControllers.controller('indexController', ['$scope', '$http', '$cookies',
     function ($scope, $http, $cookies) {
         $scope.customerID = $cookies.get('customerID') || 1; //for testing
@@ -13,11 +15,8 @@ catalogueAppControllers.controller('indexController', ['$scope', '$http', '$cook
         $scope.sports = [];          
         $scope.selected = [];      
         $scope.submitted = false;
-                
-        //get the data from the API
-        $http.get('/api/v1/customer/location?customerID=' + $scope.customerID).then(locationFetched);
-        
-        function locationFetched(response) {      
+                               
+        $scope.locationFetched = function(response) {
             if (response && response.data) {                
                 if (response.data.data) {
                     $scope.location = response.data.data;    
@@ -25,14 +24,14 @@ catalogueAppControllers.controller('indexController', ['$scope', '$http', '$cook
             }
             
             if ($scope.location && $scope.location.location_id) {
-                $http.get('/api/v1/catalogue?locationID=' + $scope.location.location_id).then(catalogueFetched);              
+                $http.get('/api/v1/catalogue?locationID=' + $scope.location.location_id).then($scope.catalogueFetched);              
             } else {
                 //show an error to the user here
                 alert("there was an error fetching your location data");
             }
         }
         
-        function catalogueFetched(response) {                                
+        $scope.catalogueFetched = function(response) {                                
             if (response && response.data) {
                 if (response.data.data) {                            
                     if (response.data.data.News) {
@@ -110,5 +109,8 @@ catalogueAppControllers.controller('indexController', ['$scope', '$http', '$cook
                 this.status.basket_status = 'empty';
             }
         }.bind($scope);
+        
+        //get the data from the API
+        $http.get('/api/v1/customer/location?customerID=' + $scope.customerID).then($scope.locationFetched);
     }
 ]);

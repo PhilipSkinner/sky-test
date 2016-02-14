@@ -4,4 +4,4 @@
 jasmine
 
 #run client side tests
-#not completed yet, make karma testing
+./node_modules/karma/bin/karma start karma.conf.js --single-run

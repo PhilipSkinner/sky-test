@@ -244,6 +244,7 @@ function returnCatalogue(value) {
 }
 
 var server = app.listen(port, function() {
+    //removed this as it makes the tests look nicer when running
     //console.log("Server is running on port:", port); 
 });
 

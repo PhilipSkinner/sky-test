@@ -8,7 +8,7 @@ fi
 
 #our dependencies
 echo "Installing dependencies..."
-npm install express q mysql body-parser jasmine request lessc
+npm install express q mysql body-parser jasmine request less karma karma-chrome-launcher karma-jasmine karma-cli
 
 #lets make our DB
 echo "Setting up database..."
@@ -22,7 +22,3 @@ mysql sky < sky.sql
 #compile our less to css
 echo "Compiling less..."
 lessc site/static/styles/main.less site/static/css/main.css
-
-#run the tests
-echo "Running tests..."
-./test.sh
